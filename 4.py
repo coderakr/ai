@@ -1,40 +1,62 @@
-# chatbot 
+# Backtracking Solution: N-Queens Problem
 
-def chatbot():
-    print("Chatbot: Hello! Welcome to our store support.")
-    print("Type 'exit' to end the chat.\n")
+def is_safe(board, row, col, n):
+    # Check column
+    for i in range(row):
+        if board[i][col] == 1:
+            return False
 
-    while True:
-        user_input = input("You: ").lower()
+    # Check left diagonal
+    i, j = row-1, col-1
+    while i >= 0 and j >= 0:
+        if board[i][j] == 1:
+            return False
+        i -= 1
+        j -= 1
 
-        if user_input == "exit":
-            print("Chatbot: Thank you! Have a great day ")
-            break
+    # Check right diagonal
+    i, j = row-1, col+1
+    while i >= 0 and j < n:
+        if board[i][j] == 1:
+            return False
+        i -= 1
+        j += 1
 
-        elif "hello" in user_input or "hi" in user_input:
-            print("Chatbot: Hello! How can I help you?")
+    return True
 
-        elif "order" in user_input and "status" in user_input:
-            print("Chatbot: Please provide your Order ID to check the status.")
 
-        elif "return" in user_input:
-            print("Chatbot: You can return items within 7 days of delivery.")
+def solve_nqueens(board, row, n):
+    if row == n:
+        return True
 
-        elif "refund" in user_input:
-            print("Chatbot: Refunds are processed within 3-5 business days.")
+    for col in range(n):
+        if is_safe(board, row, col, n):
+            board[row][col] = 1
 
-        elif "delivery" in user_input:
-            print("Chatbot: Delivery usually takes 3-7 working days.")
+            if solve_nqueens(board, row + 1, n):
+                return True
 
-        elif "time" in user_input or "hours" in user_input:
-            print("Chatbot: Our store is open from 9 AM to 9 PM.")
+            # Backtrack
+            board[row][col] = 0
 
-        elif "contact" in user_input:
-            print("Chatbot: You can contact us at support@example.com.")
-
-        else:
-            print("Chatbot: Sorry, I didn't understand that. Can you rephrase?")
+    return False
 
 
 # ---------------- Main ----------------
-chatbot()
+n = 4
+board = [[0]*n for _ in range(n)]
+
+if solve_nqueens(board, 0, n):
+    print("Solution:")
+    for row in board:
+        print(row)
+else:
+    print("No solution exists")
+
+
+## output
+# Solution:
+# [0, 1, 0, 0]
+# [0, 0, 0, 1]
+# [1, 0, 0, 0]
+# [0, 0, 1, 0]

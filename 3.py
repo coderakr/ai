@@ -1,4 +1,4 @@
-# Implement Greedy search algorithm for Minimum Spanning Tree
+# Implement Greedy search algorithm for Minimum Spanning Tree (prims)
 
 import heapq
 

@@ -1,48 +1,36 @@
-#  Implement Greedy search algorithm for Job Scheduling Problem
-
-# Job structure: (id, deadline, profit)
-
-def job_scheduling(jobs):
-    # Sort jobs by profit (descending)
+def job_scheduling(jobs, t):
+    # Step 1: Sort jobs by profit (descending)
     jobs.sort(key=lambda x: x[2], reverse=True)
 
-    # Find maximum deadline
-    max_deadline = max(job[1] for job in jobs)
-
-    # Initialize time slots
-    slots = [None] * max_deadline
+    # Step 2: Initialize result slots
+    slots = [False] * t   # track free/occupied slots
+    result = ['-1'] * t   # store job IDs
 
     total_profit = 0
 
-    # Iterate through jobs
+    # Step 3: Assign jobs greedily
     for job in jobs:
         job_id, deadline, profit = job
 
-        # Find a free slot (latest possible)
-        for i in range(min(deadline, max_deadline) - 1, -1, -1):
-            if slots[i] is None:
-                slots[i] = job_id
+        # Find a free slot before deadline
+        for j in range(min(t - 1, deadline - 1), -1, -1):
+            if not slots[j]:
+                slots[j] = True
+                result[j] = job_id
                 total_profit += profit
                 break
 
-    return slots, total_profit
+    print("Scheduled Jobs:", result)
+    print("Total Profit:", total_profit)
 
 
-# ---------------- Main ----------------
+# Example input
 jobs = [
-    ('J1', 2, 100),
-    ('J2', 1, 19),
-    ('J3', 2, 27),
-    ('J4', 1, 25),
-    ('J5', 3, 15)
+    ['a', 2, 100],
+    ['b', 1, 19],
+    ['c', 2, 27],
+    ['d', 1, 25],
+    ['e', 3, 15]
 ]
 
-schedule, profit = job_scheduling(jobs)
-
-print("Job Schedule:", schedule)
-print("Total Profit:", profit)
-
-
-## output
-# Job Schedule: ['J3', 'J1', 'J5']
-# Total Profit: 142
+job_scheduling(jobs, 3)

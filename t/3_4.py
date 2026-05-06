@@ -34,3 +34,8 @@ jobs = [
 ]
 
 job_scheduling(jobs, 3)
+
+
+# output
+# Scheduled Jobs: ['c', 'a', 'e']
+# Total Profit: 142

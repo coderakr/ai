@@ -1,50 +1,40 @@
-def is_safe(board, row, col, n):
-    # check column
-    for i in range(row):
-        if board[i][col] == 1:
-            return False
-        
-    # check left diagonal
-    i,j = row-1, col -1
-    while i>=0 and j>=0:
-        if board[i][j] == 1:
-            return False
-        i -= 1
-        j -= 1
+# Simple Chatbot for Customer Interaction Application
 
-    # check Right diagonal
-    i,j = row-1, col+1
-    while i>=0 and j<n:
-        if board[i][j] == 1:
-            return False
-        i -= 1
-        j += 1
+print("===================================")
+print(" Welcome to Customer Support Bot ")
+print("===================================")
 
-    return True
+while True:
+    print("\nHow can I help you?")
+    print("1. Product Information")
+    print("2. Order Status")
+    print("3. Complaint Registration")
+    print("4. Exit")
 
-def n_queen(board, row, n):
-    if row == n:
-        return True
-        
-    for col in range(n):
-        if is_safe(board,row,col,n):
-            board[row][col] = 1
+    choice = input("Enter your choice: ")
 
-            if(n_queen(board,row+1,n)):
-                return True
-        
-        board[row][col] = 0
+    # Product Information
+    if choice == '1':
+        product = input("Enter product name: ")
+        print(product, "is available in stock.")
+        print("Price: Rs. 500")
 
-    return False
+    # Order Status
+    elif choice == '2':
+        order_id = input("Enter Order ID: ")
+        print("Order", order_id, "has been shipped successfully.")
 
-n = 4
-board = [[0]*n for _ in range(n)]
-if(n_queen(board,0,n)):
-    print("solution:")
-    for row in board:
-        print(row)
-else:
-    print("solution doesn't exist")
+    # Complaint Registration
+    elif choice == '3':
+        complaint = input("Enter your complaint: ")
+        print("Your complaint has been registered.")
+        print("We will contact you soon.")
 
+    # Exit
+    elif choice == '4':
+        print("Thank you for using Customer Support Bot!")
+        break
 
-     
+    # Invalid Choice
+    else:
+        print("Invalid choice! Please try again.")
